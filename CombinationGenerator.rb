@@ -1,44 +1,53 @@
+require 'bigdecimal'
+
 module OrderGenerator
 	class MenuItem
 		attr_reader :name, :price
 
 		def initialize(name, price)
 			@name = name
-			@price = price
+			@price = BigDecimal.new(price)
 		end
 
 		def to_s
-			"#{@name}, $#{@price}"
+			"#{@name} ($#{'%.2f' % @price})"
 		end
 	end
 
 	module_function
 
 	def find_possible_orders(file_path)
-		puts file_path
 		price = read_target_price(file_path)
 		items = read_menu_items(file_path)
 		all_combos = generate_combinations(items)
-		puts all_combos
 		valid_combos = find_combinations_with_price(all_combos, price)
-		if valid_combos.size > 0
+		print_orders(valid_combos)
+	end
+
+	def print_orders(orders)
+		if orders.size > 0
 			puts "Here are the possible orders:"
-			valid_combos.each { |c| puts c }
+			orders.each do |order| 
+				puts "----"
+				puts order
+			end
 		else
 			puts "No matching orders found"
 		end
-	end
+	end		
 
 	def generate_combinations(items)
 		all_combinations = []
-		1.upto(items.size) do |n|
-			all_combinations.push(*items.combination(n))
-		end
+		1.upto(items.size) { |n| all_combinations.push(*items.combination(n)) }
 		all_combinations
 	end
 
 	def find_combinations_with_price(combos, price)
-		combos.map{ |c| c if c.inject(0){ |total, item| total + item.price.to_i } == price }.compact
+		matching_combos = combos.map do |c| 
+			total_price = c.inject(0){ |total, item| total + item.price }
+			c if total_price == price
+		end
+		matching_combos.compact
 	end
 
 	def read_menu_items(file_path)
@@ -48,15 +57,14 @@ module OrderGenerator
 			name, price = line.split(',$')
 			items << MenuItem.new(name, price)
 		end
-		#puts "Menu Items:"
-		#puts items
 		items
 	end
 
 	def read_target_price(file_path)
 		price = File.open(file_path).first
-		puts "Target price: #{price}"
+		price.slice!(0)
+		BigDecimal.new(price)
 	end
 end
 
-OrderGenerator.find_possible_orders "menu.txt"
+OrderGenerator.find_possible_orders ARGV[0]
