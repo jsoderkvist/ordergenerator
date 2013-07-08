@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe MenuItem do 
-	before :each do
+	before :all do
 		@item = MenuItem.new("name", "2.25")
 	end
 

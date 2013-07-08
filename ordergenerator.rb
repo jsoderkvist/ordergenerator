@@ -1,17 +1,20 @@
 require 'bigdecimal'
 require_relative 'menuitem'
+require_relative 'allcombinations'
 
-module OrderGenerator
+class OrderGenerator
 
-	module_function
+	include AllCombinations
 
 	def find_possible_orders(file_path)
 		price = read_target_price(file_path)
 		items = read_menu_items(file_path)
-		all_combos = generate_combinations(items)
+		all_combos = generate_all_combinations(items)
 		valid_combos = find_combinations_with_price(all_combos, price)
 		print_orders(valid_combos)
 	end
+
+	private
 
 	def print_orders(orders)
 		if orders.size > 0
@@ -24,12 +27,6 @@ module OrderGenerator
 			puts "No matching orders found"
 		end
 	end		
-
-	def generate_combinations(items)
-		all_combinations = []
-		1.upto(items.size) { |n| all_combinations.push(*items.combination(n)) }
-		all_combinations
-	end
 
 	def find_combinations_with_price(combos, price)
 		matching_combos = combos.map do |c| 
@@ -56,4 +53,5 @@ module OrderGenerator
 	end
 end
 
-OrderGenerator.find_possible_orders ARGV[0]
+generator = OrderGenerator.new
+generator.find_possible_orders ARGV[0]
