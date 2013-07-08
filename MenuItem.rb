@@ -1,12 +1,14 @@
+require 'bigdecimal'
+
 class MenuItem
 	attr_reader :name, :price
 
-	def initialize(, price)
+	def initialize(name, price)
 		@name = name
-		@price = price
+		@price = BigDecimal.new(price)
 	end
 
 	def to_s
-		"#{@name}, #{@price}"
+		"#{@name} ($#{'%.2f' % @price})"
 	end
 end
