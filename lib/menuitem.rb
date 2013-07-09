@@ -1,24 +1,24 @@
 require 'bigdecimal'
 
 class MenuItem
-	attr_reader :name, :price
+    attr_reader :name, :price
 
-	def initialize(name, price)
-		@name = name
-		@price = BigDecimal.new(price)
-	end
+    def initialize(name, price)
+        @name = name
+        @price = BigDecimal.new(price)
+    end
 
-	def to_s
-		"#{@name} ($#{'%.2f' % @price})"
-	end
+    def to_s
+        "#{@name} ($#{'%.2f' % @price})"
+    end
 
-	def ==(other)
-    	@name == other.name && @price == other.price
- 	end
+    def ==(other)
+        @name == other.name && @price == other.price
+    end
 
-	def hash
-		[@name, @price].hash
-	end
+    def hash
+        [@name, @price].hash
+    end
 
-	alias :eql? :==
+    alias :eql? :==
 end

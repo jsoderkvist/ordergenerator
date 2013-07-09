@@ -1,3 +1,3 @@
-require_relative '../menuitem'
-require_relative '../allcombinations'
-require_relative '../possibleorders'
+require_relative '../lib/menuitem'
+require_relative '../lib/allcombinations'
+require_relative '../lib/possibleorders'
