@@ -10,7 +10,7 @@ class PossibleOrders
 
   def initialize(file_path)
     if !File.exists?(file_path) || File.zero?(file_path)
-      raise ArgumentError.new("non-existent menu file") 
+      raise ArgumentError.new("non-existent or empty menu file") 
     end
     @price = read_target_price(file_path)
     @menu_items = read_menu_items(file_path)

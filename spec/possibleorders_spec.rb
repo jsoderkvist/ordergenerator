@@ -7,7 +7,7 @@ describe PossibleOrders do
       expect{PossibleOrders.new("")}.to raise_error(ArgumentError)
     end 
 
-    it "raises error if non-existent menu file is provided" do
+    it "raises error if empty menu file is provided" do
       expect{PossibleOrders.new("spec/data/empty_menu.txt")}.to raise_error(ArgumentError)
     end     
   end
@@ -22,7 +22,7 @@ describe PossibleOrders do
       PossibleOrders.new("spec/data/menu.txt").orders.should match_array(expected)
     end
 
-    it "returns []] for menu file with no matches" do
+    it "returns [] for menu file with no matches" do
       PossibleOrders.new("spec/data/no_match_menu.txt").orders.should match_array([])
     end
 
