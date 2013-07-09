@@ -12,13 +12,13 @@ class MenuItem
 		"#{@name} ($#{'%.2f' % @price})"
 	end
 
-  def ==(other)
-    @name == other.name && @price == other.price
-  end
+	def ==(other)
+    	@name == other.name && @price == other.price
+ 	end
 
-  def hash
-    [@name, @price].hash
-  end
+	def hash
+		[@name, @price].hash
+	end
 
-  alias :eql? :==
+	alias :eql? :==
 end
