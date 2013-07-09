@@ -9,7 +9,9 @@ class PossibleOrders
 	attr_reader :price, :menu_items, :orders
 
 	def initialize(file_path)
-		raise ArgumentError.new("non-existent menu file") if !File.exists?(file_path)
+		if !File.exists?(file_path) || File.zero?(file_path)
+			raise ArgumentError.new("non-existent menu file") 
+		end
 		@price = read_target_price(file_path)
 		@menu_items = read_menu_items(file_path)
 		@orders = find_possible_orders
@@ -18,9 +20,10 @@ class PossibleOrders
 	private
 
 	def find_possible_orders
-		all_combos = generate_all_combinations(@menu_items)
+		items_to_consider = @menu_items.reject {|i| i.price > @price }
+		all_combos = generate_all_combinations(items_to_consider)
 		matching_combos = all_combos.map do |c| 
-			total_price = c.inject(0){ |total, item| total + item.price }
+			total_price = c.inject(0) { |total, item| total + item.price }
 			c if total_price == @price
 		end
 		matching_combos.compact	

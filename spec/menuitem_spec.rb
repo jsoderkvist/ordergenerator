@@ -34,11 +34,13 @@ describe MenuItem do
 
 		it "compares name" do
 			@item.==(MenuItem.new("other", "2.25")).should be_false 
-		end	
+		end		
+	end
 
+	describe "#eql?" do
 		it "compares name and price" do
 			@item.eql?(MenuItem.new("name", "2.25")).should be_true 
-		end		
+		end	
 	end
 
 	describe "#hash" do
