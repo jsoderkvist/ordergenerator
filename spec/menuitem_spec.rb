@@ -24,15 +24,15 @@ describe MenuItem do
   end
   
   describe "#==" do
-    it "compares name and price" do
+    it "returns true when name and price are the same" do
       @item.==(MenuItem.new("name", "2.25")).should be_true 
     end
 
-    it "compares price" do
+    it "returns false when price is different" do
       @item.==(MenuItem.new("name", "2.50")).should be_false 
     end
 
-    it "compares name" do
+    it "returns false when name is different" do
       @item.==(MenuItem.new("other", "2.25")).should be_false 
     end   
   end

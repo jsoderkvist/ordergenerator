@@ -2,7 +2,7 @@ require 'bigdecimal'
 require_relative 'menuitem'
 require_relative 'allcombinations'
 
-class PossibleOrders
+class OrderGenerator
 
   include AllCombinations
 
@@ -47,7 +47,7 @@ class PossibleOrders
 end
 
 if __FILE__ == $PROGRAM_NAME
-  possible_orders = PossibleOrders.new(ARGV[0]).orders
+  possible_orders = OrderGenerator.new(ARGV[0]).orders
   if possible_orders.size > 0
     puts "Here are the possible orders:"
     possible_orders.each do |order| 
