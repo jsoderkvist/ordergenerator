@@ -33,7 +33,9 @@ class OrderGenerator
     items = []
     File.open(file_path, "r").each_line.with_index do |line, line_num|
       next if line_num == 0
-      name, price = line.split(',$')
+      line_elements = line.split(',').map(&:strip)
+      name, price = line_elements
+      price.slice!(0)
       items << MenuItem.new(name, price)
     end
     items
